@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Quantidade de Cliques</title>
+<script src="js/jquery.min.js"></script>
+</head>
+<body onload="lerCookie()">
+	<p>
+		Quantidade de cliques: <span id="quantidade"> </span>
+	</p>
+
+
+	<script type="text/javascript">
+		function lerCookie() {
+			var name = "Contador=";
+			var decodedCookie = decodeURIComponent(document.cookie);
+			var ca = decodedCookie.split(';');
+			for (var i = 0; i < ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0) == ' ') {
+					c = c.substring(1);
+				}
+				if (c.indexOf(name) == 0) {
+					return c.substring(name.length, c.length);
+				}
+			}
+		}
+
+		$(document).ready(function() {
+			var quantidade = lerCookie();
+			$("#quantidade").text(quantidade);
+		});
+	</script>
+</body>
+</html>

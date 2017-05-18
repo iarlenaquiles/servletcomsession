@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Produtos</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<script src="js/jquery.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<button type="button" class="btn btn-primary btn-ms"
+			data-toggle="modal" data-target="#ModalProduto" id="mostrarCarrinho">Mostrar
+			Carrinho</button>
+		<form id="formProduto">
+			<div class="form-group">
+				<label for="nome">Nome:</label> <input type="text"
+					class="form-control" name="nome" required />
+			</div>
+			<div class="form-group">
+				<label for="descricao">Descrição:</label> <input type="text"
+					class="form-control" name="descricao" required />
+			</div>
+			<div class="form-group">
+				<label for="quantidade">Quantidade:</label> <input type="text"
+					class="form-control" name="quantidade" required />
+			</div>
+			<button type="submit" class="btn btn-primary">Salvar</button>
+		</form>
+	</div>
+	<hr>
+	<div class="container">
+		<p id="dados"></p>
+	</div>
+
+	<div class="modal fade" id="ModalProduto" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Carrinho de compras</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table table-hover" id="carrinho">
+
+					</table>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script src="js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#formProduto").submit(function(event) {
+				var data = $(this).serialize();
+				$.post("salvar", data, function(resposta) {
+					$("#dados").text("Inserido com sucesso!").fadeOut(5000);
+				});
+				event.preventDefault();
+			});
+
+			$("#mostrarCarrinho").click(function() {
+				$.get("getcarrinho", function(resposta) {
+					$("#carrinho").html(resposta);
+				});
+			});
+		});
+
+		$(window).on("load", function() {
+			$.post("addcookie", function() {
+				console.log("Adicionou Cookie");
+			});
+
+			$.get("addcookie", function(resposta) {
+				console.log(resposta);
+				if (resposta == 0) {
+					window.location = 'qtdclique.html';
+				}
+			});
+		});
+	</script>
+
+</body>
+</html>
